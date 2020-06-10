@@ -11,8 +11,8 @@
         }
     ],
     "paths": {
-        "/stats/{location}":"NL" {
-            "get": {
+        "/stats/{location}":{ "NL",
+            "get": {"NL",
                 "tags": [
                     "coronavirus"
                 ],
