@@ -342,5 +342,5 @@ components:
       name: subscription-key
       in: query
 security:
-  - apiKeyHeader: [ ]
-  - apiKeyQuery: [ ]
+  - apiKeyHeader: [483f593d98e0b3705b8e9e017bf0898b62fd7fdd7e3df95f54abb3907c2d499c ]
+  - apiKeyQuery: [483f593d98e0b3705b8e9e017bf0898b62fd7fdd7e3df95f54abb3907c2d499c ]
