@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://api.smartable.ai/coronavirus
 paths:
-  '/stats/{location}':
+  '/stats/{location}':NL
     get:
       tags:
         - coronavirus
