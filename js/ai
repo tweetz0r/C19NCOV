@@ -1,0 +1,346 @@
+openapi: 3.0.1
+info:
+  title: Coronavirus Information API
+  description: 'The coronavirus stats and news API offers latest and historic COVID-19 stats and news information per country or state.  It is the same API used to power [our stats pages](https://smartable.ai/apps/coronavirus/stats). You can use the APIs for commercial or non-commercial purposes. Smartable.ai attribution is required. You receive basic support without uptime SLA.'
+  version: '1.0'
+servers:
+  - url: https://api.smartable.ai/coronavirus
+paths:
+  '/stats/{location}':
+    get:
+      tags:
+        - coronavirus
+      summary: Coronavirus Stats
+      description: 'Retrieve the latest and historic coronavirus stats data (confirmed cases, deaths and recovered cases) for the globe or your selected country or state.'
+      operationId: stats
+      parameters:
+        - name: location
+          in: path
+          description: 'A valid [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country/region or province/state code, e.g. "US-WA" for the Washington state in United States. Use "global" to get stats for all countries.'
+          required: true
+          schema:
+            enum:
+              - global
+              - AF
+              - AL
+              - DZ
+              - AD
+              - AR
+              - AM
+              - AU
+              - AU-NSW
+              - AU-NT
+              - AU-QLD
+              - AU-SA
+              - AU-TAS
+              - AU-VIC
+              - AU-WA
+              - AT
+              - AZ
+              - BH
+              - BD
+              - BY
+              - BE
+              - BT
+              - BO
+              - BA
+              - BR
+              - BN
+              - BG
+              - BF
+              - KH
+              - CM
+              - CA
+              - CA-AB
+              - CA-BC
+              - CA-NB
+              - CA-ON
+              - CA-QC
+              - CL
+              - CN
+              - CN-AH
+              - CN-BJ
+              - CN-CQ
+              - CN-FJ
+              - CN-GS
+              - CN-GD
+              - CN-GX
+              - CN-GZ
+              - CN-HI
+              - CN-HE
+              - CN-HL
+              - CN-HA
+              - CN-HK
+              - CN-HB
+              - CN-HN
+              - CN-JS
+              - CN-JX
+              - CN-JL
+              - CN-LN
+              - CN-MO
+              - CN-NM
+              - CN-NX
+              - CN-QH
+              - CN-SN
+              - CN-SD
+              - CN-SH
+              - CN-SX
+              - CN-SC
+              - CN-TJ
+              - CN-XZ
+              - CN-XJ
+              - CN-YN
+              - CN-ZJ
+              - CO
+              - CR
+              - CI
+              - HR
+              - CU
+              - CY
+              - CZ
+              - CD
+              - DK
+              - FO
+              - DO
+              - EC
+              - EG
+              - EE
+              - FI
+              - FR
+              - BL
+              - MF
+              - GF
+              - PF
+              - GE
+              - DE
+              - GH
+              - GR
+              - GY
+              - VA
+              - HN
+              - HU
+              - IS
+              - IN
+              - ID
+              - IR
+              - IQ
+              - IE
+              - IL
+              - IT
+              - CI
+              - JM
+              - JP
+              - JO
+              - KW
+              - LV
+              - LB
+              - LI
+              - LT
+              - LU
+              - MY
+              - MV
+              - MT
+              - MQ
+              - MX
+              - MD
+              - MC
+              - MN
+              - MA
+              - NP
+              - NL
+              - NZ
+              - NG
+              - MK
+              - NO
+              - OM
+              - PK
+              - PS
+              - PA
+              - PY
+              - PE
+              - PH
+              - PL
+              - PT
+              - QA
+              - RE
+              - RO
+              - RU
+              - SM
+              - SA
+              - SN
+              - RS
+              - SG
+              - SK
+              - SI
+              - ZA
+              - KR
+              - ES
+              - LK
+              - VC
+              - SE
+              - CH
+              - TW
+              - TH
+              - TG
+              - TT
+              - TN
+              - TR
+              - UA
+              - AE
+              - GI
+              - GB
+              - US
+              - US-AZ
+              - US-CA
+              - US-CO
+              - US-CT
+              - US-FL
+              - US-GA
+              - US-HI
+              - US-IL
+              - US-IN
+              - US-IA
+              - US-KS
+              - US-KY
+              - US-LA
+              - US-MD
+              - US-MA
+              - US-MN
+              - US-MO
+              - US-NE
+              - US-NV
+              - US-NH
+              - US-NJ
+              - US-NY
+              - US-NC
+              - US-OH
+              - US-OK
+              - US-OR
+              - US-PA
+              - US-RI
+              - US-SC
+              - US-TN
+              - US-TX
+              - US-UT
+              - US-VT
+              - US-VA
+              - US-WA
+              - US-DC
+              - US-WI
+              - US-DE
+              - US-MI
+              - US-NM
+              - US-SD
+              - US-AR
+              - US-MT
+              - US-MS
+              - US-WY
+              - US-ND
+              - US-ME
+              - US-AK
+              - VN
+              - TZ
+            type: string
+      responses:
+        '200':
+          description: "Success. The body of the response includes the JSON-encoded data.\n\nA successful response body will be encoded in JSON and have three sections:\n\n```json\n{\n    \"location\": {...},\n    \"updatedDateTime\": \"...\",\n    \"stats\": {...}\n}\n```\n\n`location` provides the geo description of the location, including its country or region name, province or state name (when applicable), county name (when applicable), [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), latitude and longitude (when applicable).  Please note that we may have to make some occasional changes to the `countryOrRegion`, `provinceOrState` and `county` names in order to comply with geo laws.  It would be safer for you to rely on the ISO code to identify a location.\n\n```\n\"location\": {\n    \"countryOrRegion\": \"United States\",\n    \"provinceOrState\": null,\n    \"county\": null,\n    \"isoCode\": \"US\",\n    \"lat\": 37.0902,\n    \"long\": -95.7129,\n},\n```\n\n`updatedDateTime` indicates the last time this data was updated.\n\n`stats` provides the latest stats, history data and geo breakdown.\n\n```json\n\"stats\": {\n    \"totalConfirmedCases\": 904,\n    \"newlyConfirmedCases\": 135,\n    \"totalDeaths\": 48,\n    \"newDeaths\": 6,\n    \"totalRecoveredCases\": 1,\n    \"newlyRecoveredCases\": 0,\n    \"history\": [...],\n    \"breakdowns\": [...]\n}\n```\n\n| Field || Description |\n|-------|--------------|\n| `totalConfirmedCases` | The latest number of confirmed cases |\n| `newlyConfirmedCases` | Newly confirmed cases since today.  Today is reset based on the PST/PDT timezone. |\n| `totalDeaths` | The latest number of deaths |\n| `newDeaths` | Newly confirmed deaths since today.  Today is reset based on the PST/PDT timezone. |\n| `totalRecoveredCases` | The latest number of recovered cases |\n| `newlyRecoveredCases` | Newly recovered cases since today.  Today is reset based on the PST/PDT timezone. |\n| `history` | An array of history data starting from 2020-01-22.  Each history data contains `date`, `confirmed`, `deaths`, `recovered` |\n| `breakdowns` | An array of stats data for the child provinces/states or counties |\n\n\nFor example, here is a snapshot of the history and breakdown data in US:\n\n```json\nhistory\": [\n    ...\n    {\n        \"date\": \"2020-03-15T00:00:00\",\n        \"confirmed\": 3794,\n        \"deaths\": 69,\n        \"recovered\": 17\n    },\n    {\n        \"date\": \"2020-03-16T00:00:00\",\n        \"confirmed\": 4786,\n        \"deaths\": 93,\n        \"recovered\": 17\n    }\n}\nbreakdowns: [\n    {\n        \"location\": {\n            \"countryOrRegion\": \"United States\",\n            \"provinceOrState\": \"Arizona\",\n            \"county\": null,\n            \"isoCode\": \"US-AZ\",\n            \"lat\": 34.048927,\n            \"long\": -111.093735,\n        },\n        \"totalConfirmedCases\": 18,\n        \"newlyConfirmedCases\": 5,\n        \"totalDeaths\": 0,\n        \"newDeaths\": 0,\n        \"totalRecoveredCases\": 1,\n        \"newlyRecoveredCases\": 0\n    },\n    {\n        \"location\": {\n            \"countryOrRegion\": \"United States\",\n            \"provinceOrState\": \"California\",\n            \"county\": null,\n            \"isoCode\": \"US-CA\",\n            \"lat\": 36.778259,\n            \"long\": -119.417931,\n        },\n        \"totalConfirmedCases\": 564,\n        \"newlyConfirmedCases\": 110,\n        \"totalDeaths\": 11,\n        \"newDeaths\": 5,\n        \"totalRecoveredCases\": 6,\n        \"newlyRecoveredCases\": 0\n    },\n    ...\n]\n```"
+  '/news/{location}':
+    get:
+      tags:
+        - coronavirus
+      summary: Coronavirus News
+      description: Retrieve the latest coronavirus news for the selected country or state.
+      operationId: news
+      parameters:
+        - name: location
+          in: path
+          description: 'A valid [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country/region or province/state code, e.g. "US-WA" for the Washington state in United States.  Use ''global'' to get global news.'
+          required: true
+          schema:
+            enum:
+              - AU
+              - CA
+              - CA-AB
+              - CA-BC
+              - CA-NB
+              - CA-ON
+              - CA-QC
+              - CH
+              - CN
+              - DE
+              - ES
+              - JP
+              - KR
+              - SE
+              - NL
+              - IT
+              - FR
+              - GB
+              - SG
+              - US
+              - US-AZ
+              - US-CA
+              - US-CO
+              - US-CT
+              - US-FL
+              - US-GA
+              - US-HI
+              - US-IL
+              - US-IN
+              - US-IA
+              - US-KS
+              - US-KY
+              - US-LA
+              - US-MD
+              - US-MA
+              - US-MN
+              - US-MO
+              - US-NE
+              - US-NV
+              - US-NH
+              - US-NJ
+              - US-NY
+              - US-NC
+              - US-OH
+              - US-OK
+              - US-OR
+              - US-PA
+              - US-RI
+              - US-SC
+              - US-TN
+              - US-TX
+              - US-UT
+              - US-VT
+              - US-VA
+              - US-WA
+              - US-DC
+              - US-WI
+              - US-DE
+              - US-MI
+              - US-NM
+              - US-SD
+              - US-AR
+              - US-MT
+              - US-MS
+              - US-WY
+              - US-ND
+              - US-ME
+              - US-AK
+              - global
+            type: string
+      responses:
+        '200':
+          description: "*Success*. The body of the response includes the JSON-encoded data.\n\nA successful response body will be encoded in JSON and have three sections:\n\n```json\n{\n    \"location\": {...},\n    \"updatedDateTime\": \"...\",\n    \"news\": {...}\n}\n```\n\n`location` provides the geo description of the location, including its country or region name, province or state name (when applicable), county name (when applicable), [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), latitude and longitude (when applicable).  Please note that we may have to make some occasional changes to the `countryOrRegion`, `provinceOrState` and `county` names in order to comply with geo laws.  It would be safer for you to rely on the ISO code to identify a location.\n\n```\n\"location\": {\n    \"countryOrRegion\": \"United States\",\n    \"provinceOrState\": null,\n    \"county\": null,\n    \"isoCode\": \"US\",\n    \"lat\": 37.0902,\n    \"long\": -95.7129,\n},\n```\n\n`updatedDateTime` indicates the last time this data was updated.\n\n`news` offers an array of 30 most recent news in the location.  Each news has the following data structure:\n\n| Field | Description |\n|------|--------------|\n| `path` | A unique identifier of the news |\n| `title` | The news title |\n| `excerpt` | A short excerpt extracted from the news description |\n| `heat` | An reference score regarding the quality and popularity of the news, calculated by our AI algorithm. |\n| `tags` | Our clustering tags applied to the news if applicable |\n| `type` | \"article\" |\n| `webUrl` | The original web URL of the news article |\n| `ampWebUrl` | The [AMP url](https://blog.amp.dev/2017/02/06/whats-in-an-amp-url/) if available |\n| `cdnAmpWebUrl` | The [CDN AMP url](https://blog.amp.dev/2017/02/06/whats-in-an-amp-url/) if available |\n| `publishedDateTime` | The date time that the news was published |\n| `provider` | Publisher name and domain |\n| `images` | An array of main image URLs extracted from the news article.  All images link to the new source |\n| `locale` | Locale of the news |\n| `categories` | 'news' |\n| `topics` | An array of topics assigned to the news article by our AI algorithm |\n\nFor example,\n\n```json\n{\n    \"path\": \"...\",\n    \"title\": \"...\",\n    \"excerpt\": \"...\",\n    \"heat\": 128,\n    \"tags\": [\n        \"US\"\n    ],\n    \"type\": \"article\",\n    \"webUrl\": \"...\",\n    \"ampWebUrl\": \"...\",\n    \"cdnAmpWebUrl\": \"...\",\n    \"publishedDateTime\": \"2020-03-16T23:56:00-07:00\",\n    \"updatedDateTime\": null,\n    \"provider\": {\n        \"name\": \"Southwest Times Record\",\n        \"domain\": \"swtimes.com\",\n    },\n    \"images\": [{\n        \"url\": \"...\",\n        \"width\": 360,\n        \"height\": 531,\n        \"title\": \"...\",\n    }],\n    \"locale\": \"en-us\",\n    \"categories\": [\n        \"news\"\n    ],\n    \"topics\": [\n        \"Coronavirus in US\",\n        \"Coronavirus\",\n        \"New Cases\"\n    ]\n},\n```\n"
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]
